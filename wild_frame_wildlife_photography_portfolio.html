@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WILD FRAME — Wildlife Photography Portfolio</title>
+    <meta name="description" content="Discover the untamed beauty of nature through the lens of Alex Morgan. High-resolution wildlife photography portfolio.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS (CDN for utility classes & fast response design) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#0B0F0C',
+                        forestGreen: '#1B3024',
+                        creamWhite: '#F5F1E8',
+                        goldenAccent: '#D4A85C',
+                        darkCard: '#131A15',
+                    },
+                    fontFamily: {
+                        heading: ['Playfair Display', 'serif'],
+                        body: ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* CSS Custom Styles & Animations */
+        :root {
+            --bg-dark: #0B0F0C;
+            --forest-green: #1B3024;
+            --cream-white: #F5F1E8;
+            --golden-accent: #D4A85C;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--cream-white);
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Hero Background Zoom Animation */
+        @keyframes heroZoom {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        .hero-bg-animate {
+            animation: heroZoom 24s ease-in-out infinite alternate;
+        }
+
+        /* Glassmorphism Header */
+        .glass-header {
+            background: rgba(11, 15, 12, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212, 168, 92, 0.15);
+        }
+
+        /* Animated Navigation Hover Underline */
+        .nav-link {
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--golden-accent);
+            transition: width 0.3s ease-in-out;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Intersection Observer Reveal Animation Styles */
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal.active, .reveal-left.active, .reveal-right.active {
+            opacity: 1;
+            transform: translateY(0) translateX(0);
+        }
+
+        /* Parallax Section */
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        /* Fallback for iOS touch devices where background-attachment: fixed can glitch */
+        @supports (-webkit-touch-callout: none) {
+            .parallax-bg {
+                background-attachment: scroll;
+            }
+        }
+
+        /* Gallery Overlay Animations */
+        .gallery-card .overlay {
+            background: linear-gradient(to top, rgba(11, 15, 12, 0.95) 0%, rgba(11, 15, 12, 0.3) 60%, rgba(0, 0, 0, 0) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .gallery-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .gallery-card img {
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .gallery-card .caption {
+            transform: translateY(20px);
+            transition: transform 0.4s ease-out;
+        }
+
+        .gallery-card:hover .caption {
+            transform: translateY(0);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B0F0C;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1B3024;
+            border-radius: 4px;
+            border: 1px solid #D4A85C;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4A85C;
+        }
+
+        /* Reduced Motion Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-bg-animate {
+                animation: none;
+            }
+            .reveal, .reveal-left, .reveal-right {
+                transition: none;
+                opacity: 1;
+                transform: none;
+            }
+            .gallery-card img {
+                transition: none;
+            }
+            .scroll-smooth {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+<body class="selection:bg-goldenAccent selection:text-darkBg">
+
+    <!-- NAVIGATION HEADER -->
+    <header id="header" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 glass-header py-4 px-6 md:px-12">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#hero" class="text-2xl md:text-3xl font-heading font-bold tracking-wider text-creamWhite flex items-center gap-2 group">
+                <span class="text-goldenAccent group-hover:rotate-12 transition-transform duration-300">✦</span>
+                WILD <span class="text-goldenAccent">FRAME</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm uppercase tracking-widest text-creamWhite/80 font-medium">
+                <a href="#hero" class="nav-link active hover:text-goldenAccent transition-colors">Home</a>
+                <a href="#about" class="nav-link hover:text-goldenAccent transition-colors">About</a>
+                <a href="#gallery" class="nav-link hover:text-goldenAccent transition-colors">Gallery</a>
+                <a href="#story" class="nav-link hover:text-goldenAccent transition-colors">Story</a>
+                <a href="#adventures" class="nav-link hover:text-goldenAccent transition-colors">Adventures</a>
+                <a href="#contact" class="nav-link hover:text-goldenAccent transition-colors">Contact</a>
+            </nav>
+
+            <!-- Mobile Hamburger Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-creamWhite hover:text-goldenAccent focus:outline-none p-2" aria-label="Toggle Mobile Navigation Menu">
+                <i class="fa-solid fa-bars text-2xl" id="menu-icon"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-darkBg/95 border-b border-goldenAccent/20 py-6 px-8 flex flex-col space-y-4 text-center font-medium tracking-wider uppercase text-sm shadow-2xl transition-all duration-300">
+            <a href="#hero" class="mobile-nav-link py-2 hover:text-goldenAccent border-b border-white/5">Home</a>
+            <a href="#about" class="mobile-nav-link py-2 hover:text-goldenAccent border-b border-white/5">About</a>
+            <a href="#gallery" class="mobile-nav-link py-2 hover:text-goldenAccent border-b border-white/5">Gallery</a>
+            <a href="#story" class="mobile-nav-link py-2 hover:text-goldenAccent border-b border-white/5">Story</a>
+            <a href="#adventures" class="mobile-nav-link py-2 hover:text-goldenAccent border-b border-white/5">Adventures</a>
+            <a href="#contact" class="mobile-nav-link py-2 hover:text-goldenAccent">Contact</a>
+        </div>
+    </header>
+
+    <!-- SECTION 1: HERO -->
+    <section id="hero" class="relative w-full h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image with Zoom Animation -->
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?q=80&w=2000&auto=format&fit=crop" 
+                 alt="Bengal Tiger in Wild Jungle" 
+                 class="w-full h-full object-cover hero-bg-animate"
+                 onerror="handleImgError(this)"
+                 loading="eager">
+            <!-- Dark Gradient Overlays for Readability -->
+            <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/50 to-darkBg/30"></div>
+            <div class="absolute inset-0 bg-black/30"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="relative z-10 text-center max-w-4xl px-6 pt-20">
+            <p class="text-goldenAccent tracking-[0.3em] uppercase text-xs md:text-sm font-semibold mb-4 animate-fade-in">Wildlife Photography Experience</p>
+            <h1 class="font-heading text-4xl sm:text-6xl md:text-7xl font-bold text-creamWhite leading-tight mb-6 drop-shadow-lg">
+                Capturing the Beauty of the Wild.
+            </h1>
+            <p class="text-base sm:text-lg md:text-xl text-creamWhite/80 max-w-2xl mx-auto mb-10 font-light leading-relaxed">
+                Discover the untamed beauty of nature through my lens. Every photograph tells a story of the extraordinary world around us.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6">
+                <a href="#gallery" class="w-full sm:w-auto px-8 py-4 bg-goldenAccent text-darkBg font-semibold uppercase text-xs tracking-widest rounded hover:bg-creamWhite transition-all duration-300 shadow-lg hover:shadow-goldenAccent/20 hover:-translate-y-0.5">
+                    Explore Gallery
+                </a>
+                <a href="#about" class="w-full sm:w-auto px-8 py-4 border border-creamWhite/40 hover:border-goldenAccent text-creamWhite hover:text-goldenAccent font-semibold uppercase text-xs tracking-widest rounded backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5">
+                    About Me
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <a href="#about" class="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex flex-col items-center text-creamWhite/60 hover:text-goldenAccent transition-colors animate-bounce" aria-label="Scroll to About Section">
+            <span class="text-xs uppercase tracking-widest mb-2 font-light">Scroll Down</span>
+            <i class="fa-solid fa-chevron-down text-sm"></i>
+        </a>
+    </section>
+
+    <!-- SECTION 2: ABOUT THE PHOTOGRAPHER -->
+    <section id="about" class="py-24 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            
+            <!-- Left: Photographer Image -->
+            <div class="reveal-left relative group">
+                <div class="absolute -inset-2 bg-gradient-to-r from-goldenAccent/30 to-forestGreen/50 rounded-2xl blur-lg opacity-70 group-hover:opacity-100 transition duration-500"></div>
+                <div class="relative overflow-hidden rounded-xl border border-goldenAccent/20 aspect-[4/5] bg-forestGreen/20">
+                    <img src="https://images.unsplash.com/photo-1554048612-b6a482bc67e5?q=80&w=1200&auto=format&fit=crop" 
+                         alt="Alex Morgan - Wildlife Photographer with Camera" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                         loading="lazy"
+                         onerror="handleImgError(this)">
+                </div>
+                <!-- Experience Badge -->
+                <div class="absolute -bottom-6 -right-2 sm:right-6 bg-forestGreen border border-goldenAccent/40 p-5 rounded-xl shadow-2xl backdrop-blur-md hidden sm:block">
+                    <p class="text-3xl font-heading font-bold text-goldenAccent">12+</p>
+                    <p class="text-xs uppercase tracking-wider text-creamWhite/80">Years In The Wild</p>
+                </div>
+            </div>
+
+            <!-- Right: Text Content -->
+            <div class="reveal-right flex flex-col justify-center">
+                <div class="flex items-center gap-3 mb-3">
+                    <span class="h-[1px] w-8 bg-goldenAccent"></span>
+                    <span class="text-goldenAccent text-xs uppercase tracking-[0.25em] font-semibold">Behind The Lens</span>
+                </div>
+                <h2 class="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-creamWhite mb-6 leading-tight">
+                    Dedicated to Preserving Nature’s Fleeting Moments.
+                </h2>
+                <p class="text-creamWhite/80 leading-relaxed mb-6 font-light">
+                    I'm <strong class="text-goldenAccent font-medium">Alex Morgan</strong>, a passionate wildlife photographer dedicated to capturing unforgettable moments in nature. From dense tropical rainforests to frozen arctic savannas, my camera follows the incredible, untamed raw beauty of wildlife.
+                </p>
+                <p class="text-creamWhite/70 leading-relaxed mb-8 font-light text-sm">
+                    My work is guided by patience, deep respect for natural habitats, and an obsession with light. Through photography, I strive not only to display stunning imagery but to foster conservation and awareness for endangered ecosystems across the globe.
+                </p>
+
+                <!-- Key Stats Grid -->
+                <div class="grid grid-cols-3 gap-4 mb-8 pt-6 border-t border-white/10 text-center sm:text-left">
+                    <div>
+                        <h3 class="font-heading text-2xl font-bold text-goldenAccent">35+</h3>
+                        <p class="text-xs text-creamWhite/60 uppercase tracking-wider mt-1">Countries Visited</p>
+                    </div>
+                    <div>
+                        <h3 class="font-heading text-2xl font-bold text-goldenAccent">140+</h3>
+                        <p class="text-xs text-creamWhite/60 uppercase tracking-wider mt-1">Species Photographed</p>
+                    </div>
+                    <div>
+                        <h3 class="font-heading text-2xl font-bold text-goldenAccent">18</h3>
+                        <p class="text-xs text-creamWhite/60 uppercase tracking-wider mt-1">Global Awards</p>
+                    </div>
+                </div>
+
+                <div>
+                    <a href="#gallery" class="inline-flex items-center gap-3 px-8 py-4 bg-forestGreen border border-goldenAccent/40 hover:bg-goldenAccent hover:text-darkBg text-creamWhite font-semibold uppercase text-xs tracking-widest rounded transition-all duration-300">
+                        <span>View My Work</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 3: GALLERY -->
+    <section id="gallery" class="py-24 px-6 md:px-12 lg:px-20 bg-darkBg/60 border-t border-b border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <!-- Gallery Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-goldenAccent text-xs uppercase tracking-[0.3em] font-semibold">Portfolio Collection</span>
+                <h2 class="font-heading text-3xl sm:text-5xl font-bold text-creamWhite mt-3 mb-4">
+                    Explore My Wildlife Collection
+                </h2>
+                <div class="w-16 h-0.5 bg-goldenAccent mx-auto mb-6"></div>
+                <p class="text-creamWhite/70 text-sm sm:text-base font-light">
+                    Click on any photograph to view in high-resolution full screen lightbox.
+                </p>
+            </div>
+
+            <!-- Asymmetric / Masonry Grid (9 Animals) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" id="gallery-grid">
+                
+                <!-- Item 1: Bengal Tiger -->
+                <div class="gallery-card reveal cursor-pointer group relative overflow-hidden rounded-xl border border-white/10 aspect-[4/5]" onclick="openLightbox(0)">
+                    <img src="https://images.unsplash.com/photo-1561731216-c3a4d99437d5?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Bengal Tiger in Forest" 
+                         class="w-full h-full object-cover" 
+                         loading="lazy"
+                         onerror="handleImgError(this)">
+                    <div class="overlay absolute inset-0 p-6 flex flex-col justify-end">
+                        <div class="caption">
+                            <span class="text-goldenAccent text-xs uppercase font-semibold tracking-widest">Panthera Tigris</span>
+                            <h3 class="font-heading text-2xl font-bold text-creamWhite mt-1">Bengal Tiger</h3>
+                            <p class="text-xs text-creamWhite/70 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-goldenAccent"></i> Ranthambore, India
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2: African Lion -->
+                <div class="gallery-card reveal cursor-pointer group relative overflow-hidden rounded-xl border border-white/10 aspect-[4/5]" onclick="openLightbox(1)">
+                    <img src="https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?q=80&w=1000&auto=format&fit=crop" 
+                         alt="African Lion Portrait" 
+                         class="w-full h-full object-cover" 
+                         loading="lazy"
+                         onerror="handleImgError(this)">
+                    <div class="overlay absolute inset-0 p-6 flex flex-col justify-end">
+                        <div class="caption">
+                            <span class="text-goldenAccent text-xs uppercase font-semibold tracking-widest">Panthera Leo</span>
+                            <h3 class="font-heading text-2xl font-bold text-creamWhite mt-1">African Lion</h3>
+                            <p class="text-xs text-creamWhite/70 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-goldenAccent"></i> Serengeti, Tanzania
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3: Elephant -->
+                <div class="gallery-card reveal cursor-pointer group relative overflow-hidden rounded-xl border border-white/10 aspect-[4/5]" onclick="openLightbox(2)">
+                    <img src="https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?q=80&w=1000&auto=format&fit=crop" 
+                         alt="African Elephant Herd" 
+                         class="w-full h-full object-cover" 
+                         loading="lazy"
+                         onerror="handleImgError(this)">
+                    <div class="overlay absolute inset-0 p-6 flex flex-col justify-end">
+                        <div class="caption">
+                            <span class="text-goldenAccent text-xs uppercase font-semibold tracking-widest">Loxodonta</span>
+                            <h3 class="font-heading text-2xl font-bold text-creamWhite mt-1">Savanna Elephant</h3>
+                            <p class="text-xs text-creamWhite/70 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-goldenAccent"></i> Amboseli, Kenya
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4: Snow Leopard -->
+                <div class="gallery-card reveal cursor-pointer group relative overflow-hidden rounded-xl border border-white/10 aspect-[4/5]" onclick="openLightbox(3)">
+                    <img src="https://images.unsplash.com/photo-1534188753412-3e26d0d618d6?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Snow Leopard in Snowy Mountains" 
+                         class="w-full h-full object-cover" 
+                         loading="lazy"
+                         onerror="handleImgError(this)">
+                    <div class="overlay absolute inset-0 p-6 flex flex-col justify-end">
+                        <div class="caption">
+                            <span class="text-goldenAccent text-xs uppercase font-semibold tracking-widest">Panthera Uncia</span>
+                            <h3 class="font-heading text-2xl font-bold text-creamWhite mt-1">Snow Leopard</h3>
+                            <p class="text-xs text-creamWhite/70 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-goldenAccent"></i> Hemis National Park, Himalayas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5: Eagle -->
+                <div class="gallery-card reveal cursor-pointer group relative overflow-hidden rounded-xl border border-white/10 aspect-[4/5]" onclick="openLightbox(4)">
+                    <img src="https://images.unsplash.com/photo-1611689342806-0863700ce1e4?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Bald Eagle flying" 
+                         class="w-full h-full object-cover" 
+                         loading="lazy"
+                         onerror="handleImgError(this)">
+                    <div class="overlay absolute inset-0 p-6 flex flex-col justify-end">
+                        <div class="caption">
+                            <span class="text-goldenAccent text-xs uppercase font-semibold tracking-widest">Haliaeetus Leucocephalus</span>
+                            <h3 class="font-heading text-2xl font-bold text-creamWhite mt-1">Majestic Bald Eagle</h3>
+                            <p class="text-xs text-creamWhite/70 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-goldenAccent"></i> Alaska, USA
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 6: Deer -->
+                <div class="gallery-card reveal cursor-pointer group relative overflow-hidden rounded-xl border border-white/10 aspect-[4/5]" onclick="openLightbox(5)">
+                    <img src="https://images.unsplash.com/photo-1484406566174-9da000fda645?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Red Stag Deer in Foggy Forest" 
+                         class="w-full h-full object-cover" 
+                         loading="lazy"
+                         onerror="handleImgError(this)">
+                    <div class="overlay absolute inset-0 p-6 flex flex-col justify-end">
+                        <div class="caption">
+                            <span class="text-goldenAccent text-xs uppercase font-semibold tracking-widest">Cervus Elaphus</span>
+                            <h3 class="font-heading text-2xl font-bold text-creamWhite mt-1">Red Stag Deer</h3>
+                            <p class="text-xs text-creamWhite/70 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-goldenAccent"></i> Scottish Highlands
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 7: Zebra -->
+                <div class="gallery-card reveal cursor-pointer group relative overflow-hidden rounded-xl border border-white/10 aspect-[4/5]" onclick="openLightbox(6)">
+                    <img src="https://images.unsplash.com/photo-1501705388883-4ed8a543392c?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Plains Zebra" 
+                         class="w-full h-full object-cover" 
+                         loading="lazy"
+                         onerror="handleImgError(this)">
+                    <div class="overlay absolute inset-0 p-6 flex flex-col justify-end">
+                        <div class="caption">
+                            <span class="text-goldenAccent text-xs uppercase font-semibold tracking-widest">Equus Quagga</span>
+                            <h3 class="font-heading text-2xl font-bold text-creamWhite mt-1">Plains Zebra</h3>
+                            <p class="text-xs text-creamWhite/70 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-goldenAccent"></i> Masai Mara, Kenya
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 8: Giraffe -->
+                <div class="gallery-card reveal cursor-pointer group relative overflow-hidden rounded-xl border border-white/10 aspect-[4/5]" onclick="openLightbox(7)">
+                    <img src="https://images.unsplash.com/photo-1547721064-da6cfb341d50?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Giraffe in Sunset Savanna" 
+                         class="w-full h-full object-cover" 
+                         loading="lazy"
+                         onerror="handleImgError(this)">
+                    <div class="overlay absolute inset-0 p-6 flex flex-col justify-end">
+                        <div class="caption">
+                            <span class="text-goldenAccent text-xs uppercase font-semibold tracking-widest">Giraffa Camelopardalis</span>
+                            <h3 class="font-heading text-2xl font-bold text-creamWhite mt-1">African Giraffe</h3>
+                            <p class="text-xs text-creamWhite/70 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-goldenAccent"></i> Kruger National Park
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 9: Arctic Fox -->
+                <div class="gallery-card reveal cursor-pointer group relative overflow-hidden rounded-xl border border-white/10 aspect-[4/5]" onclick="openLightbox(8)">
+                    <img src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?q=80&w=1000&auto=format&fit=crop" 
+                         alt="Red Fox in Wild Nature" 
+                         class="w-full h-full object-cover" 
+                         loading="lazy"
+                         onerror="handleImgError(this)">
+                    <div class="overlay absolute inset-0 p-6 flex flex-col justify-end">
+                        <div class="caption">
+                            <span class="text-goldenAccent text-xs uppercase font-semibold tracking-widest">Vulpes Vulpes</span>
+                            <h3 class="font-heading text-2xl font-bold text-creamWhite mt-1">Wild Red Fox</h3>
+                            <p class="text-xs text-creamWhite/70 mt-1 flex items-center gap-1">
+                                <i class="fa-solid fa-location-dot text-goldenAccent"></i> Yellowstone, USA
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: FEATURED WILDLIFE STORY (PARALLAX) -->
+    <section id="story" class="relative py-36 px-6 md:px-12 parallax-bg flex items-center justify-center overflow-hidden" 
+             style="background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2000&auto=format&fit=crop');">
+        <!-- Dark Overlay -->
+        <div class="absolute inset-0 bg-darkBg/75"></div>
+        
+        <div class="relative z-10 max-w-3xl text-center reveal">
+            <span class="text-goldenAccent uppercase tracking-[0.3em] text-xs font-semibold mb-3 block">Cinematic Focus</span>
+            <h2 class="font-heading text-3xl sm:text-5xl md:text-6xl font-bold text-creamWhite mb-6 leading-tight">
+                "Every Creature Has a Story."
+            </h2>
+            <div class="w-20 h-0.5 bg-goldenAccent mx-auto mb-8"></div>
+            <p class="text-base sm:text-lg text-creamWhite/90 font-light leading-relaxed mb-8">
+                Nature speaks in moments of silence, movement, and beauty. My mission is to preserve those fleeting encounters forever — honoring the spirits that roam the wild.
+            </p>
+            <a href="#contact" class="inline-block px-8 py-4 bg-goldenAccent text-darkBg font-semibold uppercase text-xs tracking-widest rounded hover:bg-creamWhite transition-all duration-300 shadow-xl">
+                Collaborate Or Order Prints
+            </a>
+        </div>
+    </section>
+
+    <!-- SECTION 5: PHOTOGRAPHY ADVENTURES -->
+    <section id="adventures" class="py-24 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+            <span class="text-goldenAccent text-xs uppercase tracking-[0.3em] font-semibold">Expeditions</span>
+            <h2 class="font-heading text-3xl sm:text-5xl font-bold text-creamWhite mt-3 mb-4">
+                Adventures Into the Wild
+            </h2>
+            <div class="w-16 h-0.5 bg-goldenAccent mx-auto mb-6"></div>
+            <p class="text-creamWhite/70 text-sm sm:text-base font-light">
+                Join or explore three distinct biomes that shape my photography journeys.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <!-- Card 1: African Safari -->
+            <div class="reveal bg-darkCard border border-goldenAccent/20 rounded-xl overflow-hidden group hover:border-goldenAccent/60 transition-all duration-500 flex flex-col hover:-translate-y-2 shadow-xl">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=800&auto=format&fit=crop" 
+                         alt="African Safari Wildlife Expedition" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                         loading="lazy"
+                         onerror="handleImgError(this)">
+                    <div class="absolute inset-0 bg-gradient-to-t from-darkCard to-transparent"></div>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                        <span class="text-goldenAccent text-xs uppercase tracking-widest font-semibold">Savanna Trails</span>
+                        <h3 class="font-heading text-2xl font-bold text-creamWhite mt-1 mb-3">African Safari</h3>
+                        <p class="text-creamWhite/70 text-sm font-light leading-relaxed">
+                            Explore the incredible wildlife of the African savanna, tracking big cats and massive elephant herds across golden plains.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-goldenAccent font-medium">
+                        <span>14 Days Expedition</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-2 transition-transform duration-300"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Into the Jungle -->
+            <div class="reveal bg-darkCard border border-goldenAccent/20 rounded-xl overflow-hidden group hover:border-goldenAccent/60 transition-all duration-500 flex flex-col hover:-translate-y-2 shadow-xl">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1540573137025-587263b65285?q=80&w=800&auto=format&fit=crop" 
+                         alt="Tropical Rainforest Jungle Expedition" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                         loading="lazy"
+                         onerror="handleImgError(this)">
+                    <div class="absolute inset-0 bg-gradient-to-t from-darkCard to-transparent"></div>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                        <span class="text-goldenAccent text-xs uppercase tracking-widest font-semibold">Deep Rainforest</span>
+                        <h3 class="font-heading text-2xl font-bold text-creamWhite mt-1 mb-3">Into the Jungle</h3>
+                        <p class="text-creamWhite/70 text-sm font-light leading-relaxed">
+                            Discover the mysterious beauty of tropical forests, navigating thick foliage in search of rare predators and exotic birds.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-goldenAccent font-medium">
+                        <span>10 Days Expedition</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-2 transition-transform duration-300"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Frozen Wilderness -->
+            <div class="reveal bg-darkCard border border-goldenAccent/20 rounded-xl overflow-hidden group hover:border-goldenAccent/60 transition-all duration-500 flex flex-col hover:-translate-y-2 shadow-xl">
+                <div class="relative h-64 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?q=80&w=800&auto=format&fit=crop" 
+                         alt="Frozen Arctic Wilderness" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                         loading="lazy"
+                         onerror="handleImgError(this)">
+                    <div class="absolute inset-0 bg-gradient-to-t from-darkCard to-transparent"></div>
+                </div>
+                <div class="p-6 flex-1 flex flex-col justify-between">
+                    <div>
+                        <span class="text-goldenAccent text-xs uppercase tracking-widest font-semibold">Arctic & Subzero</span>
+                        <h3 class="font-heading text-2xl font-bold text-creamWhite mt-1 mb-3">Frozen Wilderness</h3>
+                        <p class="text-creamWhite/70 text-sm font-light leading-relaxed">
+                            Experience the extraordinary wildlife adapted to snow-covered tundras, harsh mountain terrain, and subzero climates.
+                        </p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-goldenAccent font-medium">
+                        <span>12 Days Expedition</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-2 transition-transform duration-300"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 6: CONTACT -->
+    <section id="contact" class="py-24 px-6 md:px-12 lg:px-20 bg-forestGreen/20 border-t border-white/5 relative">
+        <div class="max-w-5xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16 reveal">
+                <span class="text-goldenAccent text-xs uppercase tracking-[0.3em] font-semibold">Get In Touch</span>
+                <h2 class="font-heading text-3xl sm:text-5xl font-bold text-creamWhite mt-3 mb-4">
+                    Let's Connect
+                </h2>
+                <div class="w-16 h-0.5 bg-goldenAccent mx-auto mb-6"></div>
+                <p class="text-creamWhite/80 text-sm sm:text-base font-light">
+                    Interested in purchasing fine art prints, booking photography assignments, or discussing conservation collaborations? I'd love to hear from you.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                
+                <!-- Contact Info Sidebar -->
+                <div class="lg:col-span-5 reveal-left bg-darkCard p-8 rounded-xl border border-goldenAccent/20">
+                    <h3 class="font-heading text-2xl font-bold text-creamWhite mb-6">Contact Information</h3>
+                    
+                    <div class="space-y-6 text-sm font-light">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-forestGreen border border-goldenAccent/40 flex items-center justify-center text-goldenAccent shrink-0">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase text-creamWhite/50 tracking-wider">Email Direct</p>
+                                <a href="mailto:alex.morgan@wildframe.photography" class="text-creamWhite hover:text-goldenAccent transition-colors">alex.morgan@wildframe.photography</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-forestGreen border border-goldenAccent/40 flex items-center justify-center text-goldenAccent shrink-0">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase text-creamWhite/50 tracking-wider">Studio Base</p>
+                                <p class="text-creamWhite">Jackson Hole, Wyoming, USA</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full bg-forestGreen border border-goldenAccent/40 flex items-center justify-center text-goldenAccent shrink-0">
+                                <i class="fa-solid fa-camera"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs uppercase text-creamWhite/50 tracking-wider">Representation</p>
+                                <p class="text-creamWhite">Global Nature Agency</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-white/10">
+                        <p class="text-xs uppercase text-creamWhite/50 tracking-wider mb-4">Follow My Journey</p>
+                        <div class="flex items-center gap-4">
+                            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-forestGreen/60 border border-white/10 hover:border-goldenAccent flex items-center justify-center text-creamWhite hover:text-goldenAccent transition-colors" aria-label="Instagram Profile">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-forestGreen/60 border border-white/10 hover:border-goldenAccent flex items-center justify-center text-creamWhite hover:text-goldenAccent transition-colors" aria-label="Facebook Profile">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                            <a href="https://500px.com" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-forestGreen/60 border border-white/10 hover:border-goldenAccent flex items-center justify-center text-creamWhite hover:text-goldenAccent transition-colors" aria-label="500px Photography Profile">
+                                <i class="fa-brands fa-500px"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="lg:col-span-7 reveal-right bg-darkCard p-8 rounded-xl border border-goldenAccent/20">
+                    <form id="contact-form" onsubmit="handleContactSubmit(event)" class="space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label for="user_name" class="block text-xs uppercase tracking-wider text-creamWhite/70 mb-2 font-medium">Your Name *</label>
+                                <input type="text" id="user_name" required placeholder="John Doe" class="w-full bg-darkBg/80 border border-white/10 focus:border-goldenAccent rounded p-3 text-creamWhite placeholder-white/20 outline-none transition-colors text-sm">
+                            </div>
+                            <div>
+                                <label for="user_email" class="block text-xs uppercase tracking-wider text-creamWhite/70 mb-2 font-medium">Your Email *</label>
+                                <input type="email" id="user_email" required placeholder="john@example.com" class="w-full bg-darkBg/80 border border-white/10 focus:border-goldenAccent rounded p-3 text-creamWhite placeholder-white/20 outline-none transition-colors text-sm">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="subject" class="block text-xs uppercase tracking-wider text-creamWhite/70 mb-2 font-medium">Subject</label>
+                            <input type="text" id="subject" placeholder="Fine Art Print Inquiry / Licensing" class="w-full bg-darkBg/80 border border-white/10 focus:border-goldenAccent rounded p-3 text-creamWhite placeholder-white/20 outline-none transition-colors text-sm">
+                        </div>
+
+                        <div>
+                            <label for="message" class="block text-xs uppercase tracking-wider text-creamWhite/70 mb-2 font-medium">Message *</label>
+                            <textarea id="message" rows="5" required placeholder="Tell me about your project or inquiry..." class="w-full bg-darkBg/80 border border-white/10 focus:border-goldenAccent rounded p-3 text-creamWhite placeholder-white/20 outline-none transition-colors text-sm resize-none"></textarea>
+                        </div>
+
+                        <!-- Info Banner regarding mail client -->
+                        <div class="text-xs text-creamWhite/50 bg-forestGreen/30 p-3 rounded border border-goldenAccent/10 flex items-center gap-2">
+                            <i class="fa-solid fa-circle-info text-goldenAccent"></i>
+                            <span>Submitting this form opens your default email client with your composed message.</span>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 bg-goldenAccent text-darkBg font-semibold uppercase text-xs tracking-widest rounded hover:bg-creamWhite transition-all duration-300 shadow-lg flex items-center justify-center gap-2">
+                            <span>Send Message</span>
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: FOOTER -->
+    <footer class="bg-darkBg border-t border-goldenAccent/15 py-12 px-6 md:px-12 text-creamWhite/70">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
+            
+            <!-- Logo & About -->
+            <div>
+                <a href="#hero" class="text-2xl font-heading font-bold text-creamWhite flex items-center justify-center md:justify-start gap-2">
+                    <span class="text-goldenAccent">✦</span> WILD <span class="text-goldenAccent">FRAME</span>
+                </a>
+                <p class="text-xs text-creamWhite/50 mt-2 max-w-sm">
+                    Dedicated to celebrating nature's majestic untamed spirit through high-definition fine art photography.
+                </p>
+            </div>
+
+            <!-- Footer Links -->
+            <div class="flex flex-wrap justify-center gap-6 text-xs uppercase tracking-widest">
+                <a href="#hero" class="hover:text-goldenAccent transition-colors">Home</a>
+                <a href="#about" class="hover:text-goldenAccent transition-colors">About</a>
+                <a href="#gallery" class="hover:text-goldenAccent transition-colors">Gallery</a>
+                <a href="#story" class="hover:text-goldenAccent transition-colors">Story</a>
+                <a href="#adventures" class="hover:text-goldenAccent transition-colors">Adventures</a>
+                <a href="#contact" class="hover:text-goldenAccent transition-colors">Contact</a>
+            </div>
+
+            <!-- Socials & Copyright -->
+            <div class="text-xs">
+                <p>&copy; <span id="year"></span> WILD FRAME. All rights reserved.</p>
+                <p class="text-creamWhite/40 mt-1 italic">Made with passion for wildlife.</p>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- LIGHTBOX SLIDER MODAL -->
+    <div id="lightbox" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex flex-col items-center justify-between p-4 md:p-8 transition-opacity duration-300">
+        
+        <!-- Lightbox Top Controls -->
+        <div class="w-full flex justify-between items-center z-10">
+            <span id="lightbox-counter" class="text-xs font-mono uppercase tracking-widest text-goldenAccent">1 / 9</span>
+            <button onclick="closeLightbox()" class="text-creamWhite/80 hover:text-goldenAccent text-3xl focus:outline-none transition-colors p-2" aria-label="Close Lightbox">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Lightbox Main Image & Nav -->
+        <div class="relative w-full flex-1 flex items-center justify-center my-4 overflow-hidden">
+            <!-- Prev Button -->
+            <button onclick="prevLightboxImage()" class="absolute left-2 sm:left-6 z-20 w-12 h-12 rounded-full bg-black/50 border border-white/20 hover:border-goldenAccent text-creamWhite hover:text-goldenAccent flex items-center justify-center transition-all focus:outline-none" aria-label="Previous Image">
+                <i class="fa-solid fa-chevron-left text-lg"></i>
+            </button>
+
+            <!-- Image Container -->
+            <div class="max-w-5xl max-h-[75vh] flex flex-col items-center justify-center">
+                <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[70vh] object-contain rounded border border-white/10 shadow-2xl transition-all duration-300">
+            </div>
+
+            <!-- Next Button -->
+            <button onclick="nextLightboxImage()" class="absolute right-2 sm:right-6 z-20 w-12 h-12 rounded-full bg-black/50 border border-white/20 hover:border-goldenAccent text-creamWhite hover:text-goldenAccent flex items-center justify-center transition-all focus:outline-none" aria-label="Next Image">
+                <i class="fa-solid fa-chevron-right text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Lightbox Captions -->
+        <div class="text-center z-10 max-w-xl">
+            <h3 id="lightbox-title" class="font-heading text-2xl font-bold text-creamWhite"></h3>
+            <p id="lightbox-location" class="text-xs text-goldenAccent uppercase tracking-widest mt-1"></p>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Set dynamic copyright year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Gallery Data Array for Lightbox Navigation
+        const galleryData = [
+            {
+                src: "https://images.unsplash.com/photo-1561731216-c3a4d99437d5?q=80&w=1600&auto=format&fit=crop",
+                title: "Bengal Tiger",
+                location: "Panthera Tigris — Ranthambore, India"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?q=80&w=1600&auto=format&fit=crop",
+                title: "African Lion",
+                location: "Panthera Leo — Serengeti, Tanzania"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1557050543-4d5f4e07ef46?q=80&w=1600&auto=format&fit=crop",
+                title: "Savanna Elephant",
+                location: "Loxodonta — Amboseli, Kenya"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1534188753412-3e26d0d618d6?q=80&w=1600&auto=format&fit=crop",
+                title: "Snow Leopard",
+                location: "Panthera Uncia — Hemis National Park, Himalayas"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1611689342806-0863700ce1e4?q=80&w=1600&auto=format&fit=crop",
+                title: "Majestic Bald Eagle",
+                location: "Haliaeetus Leucocephalus — Alaska, USA"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1484406566174-9da000fda645?q=80&w=1600&auto=format&fit=crop",
+                title: "Red Stag Deer",
+                location: "Cervus Elaphus — Scottish Highlands"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1501705388883-4ed8a543392c?q=80&w=1600&auto=format&fit=crop",
+                title: "Plains Zebra",
+                location: "Equus Quagga — Masai Mara, Kenya"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1547721064-da6cfb341d50?q=80&w=1600&auto=format&fit=crop",
+                title: "African Giraffe",
+                location: "Giraffa Camelopardalis — Kruger National Park"
+            },
+            {
+                src: "https://images.unsplash.com/photo-1474511320723-9a56873867b5?q=80&w=1600&auto=format&fit=crop",
+                title: "Wild Red Fox",
+                location: "Vulpes Vulpes — Yellowstone, USA"
+            }
+        ];
+
+        let currentLightboxIndex = 0;
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = document.getElementById('menu-icon');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            } else {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-xmark');
+            }
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcon.classList.remove('fa-xmark');
+                menuIcon.classList.add('fa-bars');
+            });
+        });
+
+        // Intersection Observer for Smooth Scroll Reveal
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // Active Navigation Underline update on scroll
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            const scrollY = window.pageYOffset;
+            sections.forEach(current => {
+                const sectionHeight = current.offsetHeight;
+                const sectionTop = current.offsetTop - 120;
+                const sectionId = current.getAttribute('id');
+                const navLink = document.querySelector(`.nav-link[href*="${sectionId}"]`);
+                
+                if (navLink) {
+                    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                        navLink.classList.add('active');
+                    } else {
+                        navLink.classList.remove('active');
+                    }
+                }
+            });
+        });
+
+        // Lightbox Functions
+        function openLightbox(index) {
+            currentLightboxIndex = index;
+            updateLightboxContent();
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('hidden');
+            document.body.style.overflow = 'hidden'; // Prevent page scroll
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.add('hidden');
+            document.body.style.overflow = 'auto'; // Restore scroll
+        }
+
+        function updateLightboxContent() {
+            const item = galleryData[currentLightboxIndex];
+            const img = document.getElementById('lightbox-img');
+            img.src = item.src;
+            img.alt = item.title;
+            document.getElementById('lightbox-title').textContent = item.title;
+            document.getElementById('lightbox-location').textContent = item.location;
+            document.getElementById('lightbox-counter').textContent = `${currentLightboxIndex + 1} / ${galleryData.length}`;
+        }
+
+        function nextLightboxImage() {
+            currentLightboxIndex = (currentLightboxIndex + 1) % galleryData.length;
+            updateLightboxContent();
+        }
+
+        function prevLightboxImage() {
+            currentLightboxIndex = (currentLightboxIndex - 1 + galleryData.length) % galleryData.length;
+            updateLightboxContent();
+        }
+
+        // Keyboard navigation for Lightbox
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightbox');
+            if (!lightbox.classList.contains('hidden')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowRight') nextLightboxImage();
+                if (e.key === 'ArrowLeft') prevLightboxImage();
+            }
+        });
+
+        // Touch Swipe Navigation for Lightbox (Mobile)
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const lightboxEl = document.getElementById('lightbox');
+
+        lightboxEl.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        lightboxEl.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextLightboxImage(); // Swipe Left
+            if (touchEndX > touchStartX + 50) prevLightboxImage(); // Swipe Right
+        }
+
+        // Form Submission handler with Client Validation & mailto fallback
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('user_name').value.trim();
+            const email = document.getElementById('user_email').value.trim();
+            const subject = document.getElementById('subject').value.trim() || 'WILD FRAME Photography Inquiry';
+            const message = document.getElementById('message').value.trim();
+
+            if (!name || !email || !message) {
+                alert('Please complete all required fields.');
+                return;
+            }
+
+            // Construct mailto URL
+            const mailtoUrl = `mailto:alex.morgan@wildframe.photography?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("Name: " + name + "\nEmail: " + email + "\n\nMessage:\n" + message)}`;
+            
+            // Trigger mailto application
+            window.location.href = mailtoUrl;
+
+            // Clear form
+            document.getElementById('contact-form').reset();
+        }
+
+        // Image Fallback Handler for broken or restricted URLs
+        function handleImgError(image) {
+            image.onerror = null; // Prevent infinite loop
+            image.src = "https://images.unsplash.com/photo-1534188753412-3e26d0d618d6?q=80&w=1000&auto=format&fit=crop"; // Graceful fallback wildlife photography
+        }
+    </script>
+</body>
+</html>
